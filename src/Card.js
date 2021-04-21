@@ -19,27 +19,27 @@ import rofo from './rofo.png';
 const menuItems = [
     {
         label: 'Chicken Drumstick',
-        image: <ChickenLeg/>
+        image: <ChickenLeg width="45px"/>
     },
     {
         label: 'Chicken',
-        image: <Chicken/>
+        image: <Chicken width="45px"/>
     },
     {
         label: 'Soda',
-        image: <Soda/>
+        image: <Soda width="45px"/>
     },
     {
         label: 'Fries',
-        image: <FrenchFries/>
+        image: <FrenchFries width="45px"/>
     },
     {
         label: 'Coffee',
-        image: <Coffee/>
+        image: <Coffee width="45px"/>
     },
     {
         label: 'Slurpee',
-        image: <DrinkStraw/>
+        image: <DrinkStraw width="45px"/>
     },
     {
         label: 'Rofo logo',
@@ -47,7 +47,11 @@ const menuItems = [
     },
     {
         label: 'Gas',
-        image: <Gas/>
+        image: <Gas width="45px"/>
+    },
+    {
+        label: 'Reset Card',
+        image: <ArrowDropDownCircleIcon/>
     }
 ]
 
@@ -55,15 +59,14 @@ export const Card = ({
     clearCards,
     setClearCards
 }) => {
-  const [itemPicked, setItemPicked] = React.useState(false);
-  const [image, setImage] = React.useState(null);
+  const [image, setImage] = React.useState(<ArrowDropDownCircleIcon/>);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   React.useEffect(() => {
       if (clearCards) {
-          setItemPicked(false);
           setImage(null);
-          setClearCards(false)
+          setClearCards(false);
+          setImage(<ArrowDropDownCircleIcon/>)
       }
   }, [clearCards, setClearCards])
 
@@ -74,16 +77,14 @@ export const Card = ({
   const handleClose = (menuItem) => {
       if (menuItem) {
         setAnchorEl(null);
-        setItemPicked(true);
         setImage(menuItem.image)
       }
   };
   
   return (
     <div className="box">
-        {itemPicked ? image : <>
         <IconButton onClick={(event) => handleClick(event)}>
-            <ArrowDropDownCircleIcon/>
+            {image}
         </IconButton>
         <Menu
             id="simple-menu"
@@ -94,6 +95,5 @@ export const Card = ({
         >
             {menuItems.map(menuItem => <MenuItem onClick={() => handleClose(menuItem)}>{menuItem.label}</MenuItem>)}
         </Menu>
-      </>}
     </div>)
 }
